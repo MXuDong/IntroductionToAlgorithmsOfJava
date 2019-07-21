@@ -54,16 +54,18 @@ public class ArrayUtil {
      *
      * @param array 目标数组
      */
-    public static void outputArray(int[] array) {
+    public static String outputArray(int[] array) {
 
         final int lineCount = 10;
 
-        for (int i = 0; i < array.length; i++) {
-            if (i % 10 == 0) {
-                System.out.println();
-            }
-            System.out.print(array[i] + '\t');
+        StringBuilder res = new StringBuilder();
 
+        for (int i = 0; i < array.length; i++) {
+            res.append(array[i]).append('\t');
+            if ((i + 1) % 10 == 0) {
+                res.append('\n');
+            }
         }
+        return res.toString();
     }
 }

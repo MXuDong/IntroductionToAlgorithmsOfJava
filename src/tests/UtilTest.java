@@ -128,7 +128,7 @@ public class UtilTest<T extends TestAble> {
                         successTestCount++;
                         System.out.println("\t本次测试用时：" + innerTestTimes[j] + "ms");
                         System.out.println("\t测试结果:");
-                        System.out.println(resultString);
+                        System.out.println('\t' + resultString);
                         if (innerTestTimes[j] > innerTestTimes[innerMaxIndex]) {
                             innerMaxIndex = j;
                         }
@@ -142,30 +142,29 @@ public class UtilTest<T extends TestAble> {
                         System.out.println("\t" + resultString);
                     }
                 }
-
-                System.out.println("本次测试结果：");
-                System.out.println("\t=最少测试时间：" + innerTestTimes[innerMinIndex]);
-                System.out.println("\t=最多测试时间：" + innerTestTimes[innerMaxIndex]);
-                double avg = 0;
-                int count = 0;
-                for (long innerTime : innerTestTimes) {
-                    if (innerTime != -1) {
-                        avg += innerTime;
-                        count++;
-                    }
-
-                }
-                avg = count == -1 ? -1 : avg / (count);
-                testTime[i] = avg;
-                System.out.println("\t=平均测试时间：");
-
-                if (avg > testTime[maxTimeTestIndex]) {
-                    maxTimeTestIndex = i;
+            }
+            System.out.println("本次测试结果：");
+            System.out.println("\t=最少测试时间：" + innerTestTimes[innerMinIndex]);
+            System.out.println("\t=最多测试时间：" + innerTestTimes[innerMaxIndex]);
+            double avg = 0;
+            int count = 0;
+            for (long innerTime : innerTestTimes) {
+                if (innerTime != -1) {
+                    avg += innerTime;
+                    count++;
                 }
 
-                if (avg < testTime[minTimeTestIndex] && avg != -1) {
-                    minTimeTestIndex = i;
-                }
+            }
+            avg = count == 0 ? -1 : avg / (count);
+            testTime[i] = avg;
+            System.out.println("\t=平均测试时间：" + avg);
+
+            if (avg > testTime[maxTimeTestIndex]) {
+                maxTimeTestIndex = i;
+            }
+
+            if (avg < testTime[minTimeTestIndex] && avg != -1) {
+                minTimeTestIndex = i;
             }
         }
 
@@ -181,9 +180,9 @@ public class UtilTest<T extends TestAble> {
         avg = count == 0 ? -1 : avg / count;
         System.out.println("最小耗时" + testTime[minTimeTestIndex] + "ms");
         System.out.println("最大耗时" + testTime[maxTimeTestIndex] + "ms");
-        System.out.println("平均耗时" + avg + "ms");
+        System.out.println("*平均耗时" + avg + "ms");
         System.out.println("测试总数" + totalTestCount);
-        System.out.println("测试成功数" + successTestCount + "; 测试成功率" + (totalTestCount == 0 ? 0 :successTestCount / totalTestCount));
+        System.out.println("测试成功数" + successTestCount + "; 测试成功率" + (totalTestCount == 0 ? 0 : successTestCount / totalTestCount));
         System.out.println("测试失败数" + faildTestCount + "; 测试失败率" + (totalTestCount == 0 ? 0 : faildTestCount / totalTestCount));
         System.out.println("测试异常数" + invokeFaildCount + "; 测试异常率" + (totalTestCount == 0 ? 0 : invokeFaildCount / totalTestCount));
 
