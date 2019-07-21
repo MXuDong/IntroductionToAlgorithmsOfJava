@@ -19,4 +19,12 @@ public interface TestAble {
      * @return 格式化后的肌肤穿
      */
     String getResultFormat(Object... objects);
+
+    /**
+     * 验证结果集是否正确
+     *
+     * @param objects 结果
+     * @return 是否正确
+     */
+    boolean checkResult(Object... objects);
 }
