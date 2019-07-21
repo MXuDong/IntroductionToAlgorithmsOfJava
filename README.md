@@ -13,4 +13,3 @@ chapter2.part1中
 
 # 目录
 ### [第二章 算法基础](src/chapter2/README.md)
-#### [第一节 插入排序 Insert-Sort](src/chapter2/part1/insert_sort/README.md)
