@@ -65,9 +65,9 @@ public class UtilTest<T extends TestAble> {
         }
 
         methods = reflectorTarget.getClassObject().getMethods();
-        for(Invoker invoker : methods){
-            if(invoker.getMethodName().equals(targetMethodName)){
-                targetMethods.add((CommonMethod)invoker);
+        for (Invoker invoker : methods) {
+            if (invoker.getMethodName().equals(targetMethodName)) {
+                targetMethods.add((CommonMethod) invoker);
             }
         }
 
