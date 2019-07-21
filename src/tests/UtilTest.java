@@ -31,10 +31,11 @@ public class UtilTest<T extends TestAble> {
     /**
      * 执行方法
      *
-     * @param tClass           目标类
-     * @param targetMethodName 目标方法名
+     * @param testClass         目标类
+     * @param targetMethodName  目标方法名
+     * @param targetMethodClass 目标方法的类
      */
-    public void start(Class<T> tClass, String targetMethodName) {
+    public void start(Class<T> testClass, String targetMethodName, Class targetMethodClass) {
 
         System.out.println("测试开始");
         System.out.println("开始构建测试");
@@ -52,18 +53,21 @@ public class UtilTest<T extends TestAble> {
         targetParamInvokers = new ArrayList<>();
         targetMethods = new ArrayList<>();
 
-        Reflector<TestAble> reflector = new Reflector(tClass);
-        Invoker[] methods = reflector.getClassObject().getMethods();
+        Reflector<TestAble> reflectorTest = new Reflector(testClass);
+        Reflector reflectorTarget = new Reflector(targetMethodClass);
+        Invoker[] methods = reflectorTest.getClassObject().getMethods();
 
         for (Invoker invoker : methods) {
-            if (invoker.getMethodName().equals(targetMethodName)) {
-                targetMethods.add((CommonMethod) invoker);
-                continue;
-            }
-
             CommonMethod commonMethod = (CommonMethod) invoker;
             if (commonMethod.getAnnotation(TargetMethodParamCreater.class) != null) {
                 targetParamInvokers.add(commonMethod);
+            }
+        }
+
+        methods = reflectorTarget.getClassObject().getMethods();
+        for(Invoker invoker : methods){
+            if(invoker.getMethodName().equals(targetMethodName)){
+                targetMethods.add((CommonMethod)invoker);
             }
         }
 
@@ -100,8 +104,8 @@ public class UtilTest<T extends TestAble> {
                 System.out.println("\t目标输入参数：");
                 totalTestCount++;
 
-                Object params = commonMethod.invoke(reflector.getInnerObject());
-                String paramString = reflector.getInnerObject().getParamFormat(params);
+                Object params = commonMethod.invoke(reflectorTest.getInnerObject());
+                String paramString = reflectorTest.getInnerObject().getParamFormat(params);
                 paramString = paramString.replaceAll("\\n", "\n\t");
                 System.out.println("\t" + paramString);
 
@@ -110,7 +114,7 @@ public class UtilTest<T extends TestAble> {
                 for (Invoker invoker : targetMethods) {
                     if (invoker.isParamsIsThisMethod(params)) {
                         long innerStartTime = TimeUtil.getCurrentTime();
-                        result = invoker.invoke(reflector.getInnerObject(), params);
+                        result = invoker.invoke(reflectorTarget.getInnerObject(), params);
                         long innerStopTime = TimeUtil.getCurrentTime();
                         innerTestTimes[j] = innerStopTime - innerStartTime;
                         break;
@@ -122,9 +126,9 @@ public class UtilTest<T extends TestAble> {
                     invokeFaildCount++;
                     System.out.println("\t测试调用失败：第" + (i + 1) + "个测试的第" + (j + 1) + "遍");
                 } else {
-                    String resultString = reflector.getInnerObject().getResultFormat(result);
+                    String resultString = reflectorTest.getInnerObject().getResultFormat(result);
                     resultString = resultString.replaceAll("\\n", "\n\t");
-                    if (reflector.getInnerObject().checkResult(result)) {
+                    if (reflectorTest.getInnerObject().checkResult(result)) {
                         successTestCount++;
                         System.out.println("\t本次测试用时：" + innerTestTimes[j] + "ms");
                         System.out.println("\t测试结果:");
