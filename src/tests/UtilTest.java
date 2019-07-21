@@ -5,6 +5,7 @@ import io.github.mxudong.rs.packings.methods.CommonMethod;
 import io.github.mxudong.rs.packings.methods.Invoker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -112,9 +113,9 @@ public class UtilTest<T extends TestAble> {
 
                 Object result = null;
                 for (Invoker invoker : targetMethods) {
-                    if (invoker.isParamsIsThisMethod(params)) {
+                    if (invoker.isParamsIsThisMethod(((Object[])params))) {
                         long innerStartTime = TimeUtil.getCurrentTime();
-                        result = invoker.invoke(reflectorTarget.getInnerObject(), params);
+                        result = invoker.invoke(reflectorTarget.getInnerObject(), ((Object[])params));
                         long innerStopTime = TimeUtil.getCurrentTime();
                         innerTestTimes[j] = innerStopTime - innerStartTime;
                         break;
@@ -175,15 +176,14 @@ public class UtilTest<T extends TestAble> {
         double avg = 0;
         int count = 0;
         for (double time : testTime) {
-
-            if (avg != -1) {
+            if (time != -1.0) {
                 count++;
                 avg += time;
             }
         }
-        avg = count == 0 ? -1 : avg / count;
-        System.out.println("==最小耗时（某个测试的平均用时）" + testTime[minTimeTestIndex] + "ms");
-        System.out.println("==最大耗时（某个测试的平均用时）" + testTime[maxTimeTestIndex] + "ms");
+        avg = count == 0 ? 0 : avg / count;
+        System.out.println("==最小耗时（某个测试的平均用时）" + (testTime.length == 0 ? 0 :testTime[minTimeTestIndex]) + "ms");
+        System.out.println("==最大耗时（某个测试的平均用时）" + (testTime.length == 0 ? 0 :testTime[maxTimeTestIndex]) + "ms");
         System.out.println("*平均耗时" + avg + "ms");
         System.out.println("==测试总数" + totalTestCount);
         System.out.println("==测试成功数" + successTestCount + "; 测试成功率" + (totalTestCount == 0 ? 0 : successTestCount / totalTestCount));

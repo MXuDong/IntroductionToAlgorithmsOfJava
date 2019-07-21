@@ -28,4 +28,32 @@ public class Merge {
             else A[k] = R[j]
                 j = j + 1
       */
+
+    public int[] merge(int[] array, int p, int q, int r) {
+        int n1 = q - p + 1;
+        int n2 = r - q;
+        int[] left = new int[n1 + 1];
+        int[] right = new int[n2 + 1];
+        for (int i = 0; i < n1 + 1; i++) {
+            left[i] = array[i + p];
+        }
+        for (int j = 1; j < n2 + 1; j++) {
+            right[j] = array[q + j];
+        }
+
+        left[n1] = Integer.MAX_VALUE;
+        right[n2] = Integer.MAX_VALUE;
+        int i = 0;
+        int j = 0;
+        for(int k = p; k < r; k++){
+            if(left[i] <= right[j]){
+                array[k] = left[i];
+                i++;
+            }else {
+                array[k] = right[j];
+                j++;
+            }
+        }
+        return array;
+    }
 }
