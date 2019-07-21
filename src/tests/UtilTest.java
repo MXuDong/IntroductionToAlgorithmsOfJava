@@ -178,13 +178,13 @@ public class UtilTest<T extends TestAble> {
             }
         }
         avg = count == 0 ? -1 : avg / count;
-        System.out.println("最小耗时" + testTime[minTimeTestIndex] + "ms");
-        System.out.println("最大耗时" + testTime[maxTimeTestIndex] + "ms");
+        System.out.println("==最小耗时（某个测试的平均用时）" + testTime[minTimeTestIndex] + "ms");
+        System.out.println("==最大耗时（某个测试的平均用时）" + testTime[maxTimeTestIndex] + "ms");
         System.out.println("*平均耗时" + avg + "ms");
-        System.out.println("测试总数" + totalTestCount);
-        System.out.println("测试成功数" + successTestCount + "; 测试成功率" + (totalTestCount == 0 ? 0 : successTestCount / totalTestCount));
-        System.out.println("测试失败数" + faildTestCount + "; 测试失败率" + (totalTestCount == 0 ? 0 : faildTestCount / totalTestCount));
-        System.out.println("测试异常数" + invokeFaildCount + "; 测试异常率" + (totalTestCount == 0 ? 0 : invokeFaildCount / totalTestCount));
+        System.out.println("==测试总数" + totalTestCount);
+        System.out.println("==测试成功数" + successTestCount + "; 测试成功率" + (totalTestCount == 0 ? 0 : successTestCount / totalTestCount));
+        System.out.println("==测试失败数" + faildTestCount + "; 测试失败率" + (totalTestCount == 0 ? 0 : faildTestCount / totalTestCount));
+        System.out.println("==测试异常数" + invokeFaildCount + "; 测试异常率" + (totalTestCount == 0 ? 0 : invokeFaildCount / totalTestCount));
 
         this.stopTime = TimeUtil.getCurrentTime();
         System.out.println("执行测试结束");

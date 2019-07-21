@@ -1,6 +1,5 @@
 package chapter2.part1.insert_sort;
 
-import io.github.mxudong.rs.randoms.BaseRandom;
 import tests.ArrayUtil;
 import tests.TargetMethodParamCreater;
 import tests.TestAble;
