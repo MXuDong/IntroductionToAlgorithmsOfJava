@@ -34,18 +34,18 @@ public class Merge {
         int n2 = r - q;
         int[] left = new int[n1 + 1];
         int[] right = new int[n2 + 1];
-        for (int i = 0; i < n1 + 1; i++) {
+        for (int i = 0; i < n1; i++) {
             left[i] = array[i + p];
         }
-        for (int j = 1; j < n2 + 1; j++) {
-            right[j] = array[q + j];
+        for (int j = 0; j < n2; j++) {
+            right[j] = array[q + j + 1];
         }
 
         left[n1] = Integer.MAX_VALUE;
         right[n2] = Integer.MAX_VALUE;
         int i = 0;
         int j = 0;
-        for(int k = p; k < r; k++){
+        for(int k = p; k <= r; k++){
             if(left[i] <= right[j]){
                 array[k] = left[i];
                 i++;
