@@ -23,7 +23,12 @@ public class Test implements TestAble {
 //        return new Object[]{a, 0, a.length - 1};
 //    }
 
-    @TargetMethodParamCreater(methodInvokeCount = 10)
+    @TargetMethodParamCreater
+    public Object[] test03(){
+        int [] a =  ArrayUtil.getRandomArray(1, 100, 100000000);
+        return new Object[]{a, 0, a.length - 1};
+    }
+
     public Object[] test02(){
             int [] a =  ArrayUtil.getRandomArray(1, 100, 10000000);
             return new Object[]{a, 0, a.length - 1};
